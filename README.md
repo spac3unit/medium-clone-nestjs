@@ -22,3 +22,7 @@ pnpm run typeorm migration:generate src/migrations/AddRelationsBetweenArticleAnd
 ### Руководство по NestJS. Часть 1
 
 https://habr.com/ru/company/timeweb/blog/663234/
+
+### Nestjs telegram bot
+
+https://www.youtube.com/watch?v=6UjDqjkAMe8

@@ -3,6 +3,9 @@
 /node_modules
 /postgres-data
 
+#Env
+.env
+
 # Logs
 logs
 *.log

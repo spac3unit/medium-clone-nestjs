@@ -26,10 +26,7 @@ export class UserService {
       username: createUserDto.username,
     });
     if (userByEmail || userByUsername) {
-      throw new HttpException(
-        'Email or username are taken',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+      throw new HttpException('Email or username are taken', HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     const newUser = new UserEntity();
@@ -47,22 +44,13 @@ export class UserService {
     });
 
     if (!user) {
-      throw new HttpException(
-        'Credentials are not valid',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+      throw new HttpException('Credentials are not valid', HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    const isPasswordCorrect = await compare(
-      loginUserDto.password,
-      user.password,
-    );
+    const isPasswordCorrect = await compare(loginUserDto.password, user.password);
 
     if (!isPasswordCorrect) {
-      throw new HttpException(
-        'Credentials are not valid',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+      throw new HttpException('Credentials are not valid', HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     delete user.password;
@@ -74,10 +62,7 @@ export class UserService {
     return await this.userRepository.findOneBy({ id });
   }
 
-  async updateUser(
-    userId: number,
-    updateUserDto: UpdateUserDto,
-  ): Promise<UserEntity> {
+  async updateUser(userId: number, updateUserDto: UpdateUserDto): Promise<UserEntity> {
     const user = await this.findById(userId);
     Object.assign(user, updateUserDto); // mutate user
     return await this.userRepository.save(user);

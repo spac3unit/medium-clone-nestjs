@@ -1,12 +1,5 @@
 import { UserEntity } from '../user/user.entity';
-import {
-  BeforeUpdate,
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { BeforeUpdate, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'articles' }) //table name
 export class ArticleEntity {

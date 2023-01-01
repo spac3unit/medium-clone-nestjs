@@ -17,10 +17,7 @@ export class ArticleService {
 
   async findAll(currentUserId: number, query: any) {} // : Promise<ArticlesResponseInterface>
 
-  async createArticle(
-    currentUser: UserEntity,
-    createArticleDto: CreateArticleDto,
-  ): Promise<ArticleEntity> {
+  async createArticle(currentUser: UserEntity, createArticleDto: CreateArticleDto): Promise<ArticleEntity> {
     const article = new ArticleEntity();
     Object.assign(article, createArticleDto);
     if (!article.tagList) {
@@ -51,11 +48,7 @@ export class ArticleService {
     return await this.articleRepository.delete({ slug });
   }
 
-  async updateArticle(
-    slug: string,
-    updateArticleDto: CreateArticleDto,
-    currentUserId: number,
-  ): Promise<ArticleEntity> {
+  async updateArticle(slug: string, updateArticleDto: CreateArticleDto, currentUserId: number): Promise<ArticleEntity> {
     const article = await this.findBySlug(slug);
 
     if (!article) {
@@ -79,10 +72,6 @@ export class ArticleService {
   }
 
   private getSlug(title: string) {
-    return (
-      slugify(title, { lower: true }) +
-      '-' +
-      ((Math.random() * Math.pow(36, 6)) | 0).toString(36)
-    );
+    return slugify(title, { lower: true }) + '-' + ((Math.random() * Math.pow(36, 6)) | 0).toString(36);
   }
 }
