@@ -12,7 +12,7 @@ Middleware срабатывает раньше Guard
 ### Generate migrations
 
 ```bash
-pnpm run typeorm migration:generate src/migrations/AddRelationsBetweenArticleAndUser -d src/typeorm.config.ts
+pnpm run typeorm migration:generate src/migrations/AddFavoritesRelationsBetweenArticleAndUser -d src/typeorm.config.ts
 ```
 
 ```bash

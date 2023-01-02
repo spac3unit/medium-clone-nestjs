@@ -13,10 +13,7 @@ export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
   @Get()
-  async findAll(
-    @User('id') currentUserId: number,
-    @Query() query: any,
-  ): Promise<ArticlesResponseInterface> {
+  async findAll(@User('id') currentUserId: number, @Query() query: any): Promise<ArticlesResponseInterface> {
     return await this.articleService.findAll(currentUserId, query);
   }
 
@@ -50,6 +47,16 @@ export class ArticleController {
     @Body('article') updateArticleDto: CreateArticleDto, // same dto as for createArticleDto
   ): Promise<ArticleResponseInterface> {
     const article = await this.articleService.updateArticle(slug, updateArticleDto, currentUserId);
+    return this.articleService.buildArticleResponse(article);
+  }
+
+  @Post(':slug/favorite')
+  @UseGuards(AuthGuard)
+  async addArticleToFavorites(
+    @User('id') currentUserId: number,
+    @Param('slug') slug: string,
+  ): Promise<ArticleResponseInterface> {
+    const article = await this.articleService.addArticleToFavorites(slug, currentUserId);
     return this.articleService.buildArticleResponse(article);
   }
 }

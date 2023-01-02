@@ -1,5 +1,14 @@
 import { UserEntity } from '../user/user.entity';
-import { BeforeUpdate, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeUpdate,
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'articles' }) //table name
 export class ArticleEntity {
@@ -37,6 +46,10 @@ export class ArticleEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.articles, { eager: true }) // add article.author field to response
   author: UserEntity;
+
+  @ManyToMany((type) => UserEntity)
+  @JoinTable()
+  usersFavorites: UserEntity[];
 
   // "article": {
   //   "slug": "how-to-train-your-dragon",

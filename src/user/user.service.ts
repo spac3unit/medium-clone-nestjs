@@ -25,6 +25,7 @@ export class UserService {
     const userByUsername = await this.userRepository.findOneBy({
       username: createUserDto.username,
     });
+
     if (userByEmail || userByUsername) {
       throw new HttpException('Email or username are taken', HttpStatus.UNPROCESSABLE_ENTITY);
     }

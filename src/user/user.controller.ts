@@ -1,15 +1,5 @@
 import { ExpressRequestInterface } from '@app/types/expressRequest.interface';
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Put,
-  Req,
-  UseGuards,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Request } from 'express';
 import { User } from './decorators/user.decorator';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -26,18 +16,14 @@ export class UserController {
 
   @Post('users')
   @UsePipes(new ValidationPipe())
-  async createUser(
-    @Body('user') createUserDto: CreateUserDto,
-  ): Promise<UserResponseInterface> {
+  async createUser(@Body('user') createUserDto: CreateUserDto): Promise<UserResponseInterface> {
     const user = await this.userService.createUser(createUserDto);
     return this.userService.buildUserResponse(user);
   }
 
   @Post('users/login')
   @UsePipes(new ValidationPipe())
-  async login(
-    @Body('user') loginUserDto: LoginUserDto,
-  ): Promise<UserResponseInterface> {
+  async login(@Body('user') loginUserDto: LoginUserDto): Promise<UserResponseInterface> {
     // console.log('loginUserDto: ', loginUserDto);
     // return 'login' as any;
     const user = await this.userService.login(loginUserDto);
@@ -57,10 +43,7 @@ export class UserController {
     @User('id') currentUserId: number,
     @Body('user') updateUserDto: UpdateUserDto,
   ): Promise<UserResponseInterface> {
-    const user = await this.userService.updateUser(
-      currentUserId,
-      updateUserDto,
-    );
+    const user = await this.userService.updateUser(currentUserId, updateUserDto);
     return this.userService.buildUserResponse(user);
   }
 }
