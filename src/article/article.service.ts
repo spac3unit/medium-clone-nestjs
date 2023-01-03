@@ -61,11 +61,14 @@ export class ArticleService {
   async createArticle(currentUser: UserEntity, createArticleDto: CreateArticleDto): Promise<ArticleEntity> {
     const article = new ArticleEntity();
     Object.assign(article, createArticleDto);
+
     if (!article.tagList) {
       article.tagList = [];
     }
+
     article.author = currentUser;
     article.slug = this.getSlug(createArticleDto.title);
+
     console.log('new article: ', article);
     return await this.articleRepository.save(article);
   }
@@ -127,6 +130,29 @@ export class ArticleService {
     }
 
     console.log('user with favorites?', user);
+    return article;
+  }
+
+  async deleteArticleFromFavorites(slug: string, currentUserId: number) {
+    const article = await this.findBySlug(slug);
+    const user = await this.userRepository.findOne({
+      where: {
+        id: currentUserId,
+      },
+      relations: {
+        favorites: true,
+      },
+    });
+
+    const articleIndex = user.favorites.findIndex((articleInFavorites) => articleInFavorites.id === article.id);
+
+    if (articleIndex >= 0) {
+      user.favorites.splice(articleIndex, 1);
+      article.favoritesCount--;
+      await this.userRepository.save(user);
+      await this.articleRepository.save(article);
+    }
+    console.log('user without favorites?', user);
     return article;
   }
 
