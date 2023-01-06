@@ -21,6 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm2": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli -d=src/typeorm.config.ts",
     "typeorm": "typeorm-ts-node-commonjs",
+    "typeorm:migration:generate": "sh -c 'npm run typeorm -- migration:generate ./src/migrations/$0 -d=src/typeorm.config.ts'",
     "db:drop": "pnpm run typeorm2 schema:drop",
     "db:create": "pnpm run typeorm migration:generate -- -d src/typeorm.config.ts src/migrations/auto",
     "db:migrate": "pnpm run typeorm2 migration:run -- -d src/typeorm.config.ts"

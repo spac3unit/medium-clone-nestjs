@@ -15,3 +15,5 @@ const CONNECTION: DataSourceOptions = {
 };
 
 export default CONNECTION;
+// https://github.com/typeorm/typeorm/issues/8905
+// https://github.com/typeorm/typeorm/issues/8860

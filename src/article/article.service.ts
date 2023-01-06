@@ -133,7 +133,7 @@ export class ArticleService {
     return article;
   }
 
-  async deleteArticleFromFavorites(slug: string, currentUserId: number) {
+  async deleteArticleFromFavorites(slug: string, currentUserId: number): Promise<ArticleEntity> {
     const article = await this.findBySlug(slug);
     const user = await this.userRepository.findOne({
       where: {
@@ -152,15 +152,14 @@ export class ArticleService {
       await this.userRepository.save(user);
       await this.articleRepository.save(article);
     }
+
     console.log('user without favorites?', user);
     return article;
   }
 
   buildArticleResponse(article: ArticleEntity): ArticleResponseInterface {
     // prepare data for frontend response
-    return {
-      article,
-    };
+    return { article };
   }
 
   private getSlug(title: string) {
